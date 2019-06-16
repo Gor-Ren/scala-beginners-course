@@ -26,7 +26,6 @@ object ValuesVariablesTypes extends App {
   // variables
   var myVariable: Int = 4
   myVariable = 5  // mutable
-  myVariable += 1
 
   // we will generally prefer vals over vars
 }
