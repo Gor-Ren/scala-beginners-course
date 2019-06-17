@@ -46,15 +46,80 @@ object Functions extends App {
    1. A greeting function (name, age) "Hi, my name is $name and I am $age years old
   */
 
+  def greeting(name: String, age: Int): Unit = {
+    println("Hi, my name is " + name + " and I am " + age + " years old.")
+  }
+
+  greeting("Luna", 3)
+
   /*
    2. Factorial function: 1 * 2 * 3 * ... * n
   */
+
+  def factorial(n: Int): Int = {
+    if (n < 0) throw new IllegalArgumentException("input must be non-negative")
+    else if (n <= 1) 1
+    else n * factorial(n - 1)
+  }
+
+  println(factorial(0))
+  println(factorial(3))
+//  println(factorial(-1))
 
   /*
    3. Fibonnacci function: f(1) = 1, f(2) = 2, f(n) = f(n-1) + f(n-2)
   */
 
+  def fib(n: Int): Int = {
+    if (n < 0) throw new IllegalArgumentException("input must be non-negative")
+    else if (n == 0) 0
+    else if (n == 1) 1
+    else fib(n - 1) + fib(n - 2)
+  }
+
+
   /*
    4. Prime testing function: Int -> Boolean
   */
+
+  // naive solution without optimisation
+  def isPrime(candidate: Int): Boolean = {
+    /**
+      * Returns true if candidate is divisible by any integer between 2 and upTo
+      *
+      * @param candidate the value to be tested
+      * @param upTo the maximum divisor to be tested
+      * @return true if candidate is divisible by any value between 2 and upTo, else false
+      */
+    def isDivisibleByAny(candidate: Int, upTo: Int): Boolean = {
+      if (upTo == 1) false
+      else if (candidate % upTo == 0) true
+      else isDivisibleByAny(candidate, upTo - 1)
+    }
+
+    /**
+      * Calculates the square root of n, rounding down if necessary
+      *
+      * @param n the value for which a square root will be calculated
+      * @return the square root of n if it is a perfect square, or a rounded-down integer
+      */
+    def integerSqrt(n: Int): Int = {
+      Math.floor(Math.sqrt(n)).toInt
+    }
+
+    if (candidate < 0) throw new IllegalArgumentException("input must be non-negative")
+    else if (candidate == 0) false
+    else if (candidate == 1 || candidate == 2) true
+    else !isDivisibleByAny(candidate, integerSqrt(candidate))
+    // check whether all nums from 2 to sqrt(candidate) are divisible into it?
+  }
+
+  def calculateIsPrime(n: Int): Unit = {
+    if (n > 0) {
+      println("Is " + n + " prime? " + isPrime(n))
+      calculateIsPrime(n - 1)
+    }
+  }
+
+  calculateIsPrime(30)
 }
