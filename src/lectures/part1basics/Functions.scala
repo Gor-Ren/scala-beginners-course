@@ -46,11 +46,11 @@ object Functions extends App {
    1. A greeting function (name, age) "Hi, my name is $name and I am $age years old
   */
 
-  def greeting(name: String, age: Int): Unit = {
-    println("Hi, my name is " + name + " and I am " + age + " years old.")
+  def greeting(name: String, age: Int): String = {
+    "Hi, my name is " + name + " and I am " + age + " years old."
   }
 
-  greeting("Luna", 3)
+  println(greeting("Luna", 3))
 
   /*
    2. Factorial function: 1 * 2 * 3 * ... * n
@@ -64,6 +64,7 @@ object Functions extends App {
 
   println(factorial(0))
   println(factorial(3))
+  println(factorial(5))
 //  println(factorial(-1))
 
   /*
@@ -77,6 +78,7 @@ object Functions extends App {
     else fib(n - 1) + fib(n - 2)
   }
 
+  println(fib(5))
 
   /*
    4. Prime testing function: Int -> Boolean
@@ -98,10 +100,10 @@ object Functions extends App {
     }
 
     /**
-      * Calculates the square root of n, rounding down if necessary
+      * Calculates the integer square root of n, rounding down if necessary
       *
       * @param n the value for which a square root will be calculated
-      * @return the square root of n if it is a perfect square, or a rounded-down integer
+      * @return the square root of n if it is a perfect square, or its square root rounded down
       */
     def integerSqrt(n: Int): Int = {
       Math.floor(Math.sqrt(n)).toInt
@@ -114,12 +116,12 @@ object Functions extends App {
     // check whether all nums from 2 to sqrt(candidate) are divisible into it?
   }
 
-  def calculateIsPrime(n: Int): Unit = {
+  def printIsPrimeUpTo(n: Int): Unit = {
     if (n > 0) {
       println("Is " + n + " prime? " + isPrime(n))
-      calculateIsPrime(n - 1)
+      printIsPrimeUpTo(n - 1)
     }
   }
 
-  calculateIsPrime(30)
+  printIsPrimeUpTo(30)
 }
