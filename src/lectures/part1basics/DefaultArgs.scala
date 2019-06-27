@@ -46,6 +46,8 @@ object DefaultArgs extends App {
   // tl;dr: it's like Python. woop.
 
   // we can swap around args that don't have defaults using names
-  def twoParams(x: Int, y: Int): Unit = {}
+  def twoParams(x: Int, y: Int): Unit = {
+    println("x=" + x + ", y="+y)
+  }
   twoParams(y = 2, x = 1)
 }
