@@ -1,5 +1,7 @@
 package lectures.part2oop
 
+import java.time.Year
+
 object OopBasics extends App {
 
   val person = new Person("John", 55)
@@ -37,7 +39,7 @@ class Person(name: String, val age: Int) {
 /*
   Exercise: create a Novel and Writer class.
 
-  Writer: first name, surname, year,
+  Writer: first name, surname, year of birth,
     method: fullname
 
   Novel: name, year of release, author
@@ -47,6 +49,39 @@ class Person(name: String, val age: Int) {
       - copy(Int) = new instance of Novel with new year of release
  */
 
+class Writer(firstName: String, lastName: String, val birthYear: Year) {
+
+  def fullName(): String = s"$firstName $lastName"
+}
+
+
+class Novel(val name: String, val yearReleased: Year, val author: Writer) {
+
+  def authorAge(): Int = Year.now().compareTo(author.birthYear)
+
+  def isWrittenBy(candidate: Writer): Boolean = {
+    candidate.fullName().equals(author.fullName())
+  }
+
+  def copy(yearReleased: Int): Novel = {
+    new Novel(name, Year.of(yearReleased), author)
+  }
+}
+
+object DemoNovel extends App {
+  val grMartin = new Writer("George", "Martin", Year.of(1961))
+  println(s"Author: $grMartin")
+  println(s"Name: ${grMartin.fullName()}")
+
+  val got = new Novel("A Game Of Thrones", Year.of(1998), grMartin)
+  println(s"Book: $got")
+  println(s"Book by GRM: ${got.isWrittenBy(grMartin)}")
+  println(s"Book published: ${got.yearReleased}")
+  println(s"Book author age: ${got.authorAge()}")
+  val newEditionGot = got.copy(2018)
+  println(s"New edition released: ${newEditionGot.yearReleased}")
+  println(s"New edition author age: still ${newEditionGot.authorAge()}")
+}
 
 /*
   Exercise: Counter class
@@ -55,3 +90,31 @@ class Person(name: String, val age: Int) {
     - method to increment/decrement (returning new Counter)
     - overloaded increment(Int)/decrement(Int) which move by input amount
  */
+
+class Counter(val count: Int) {
+
+  def increment(incrementBy: Int): Counter = {
+    new Counter(this.count + incrementBy)
+  }
+
+  def increment(): Counter = {
+    increment(1)
+  }
+
+  def decrement(decrementBy: Int): Counter = {
+    new Counter(this.count - decrementBy)
+  }
+
+  def decrement(): Counter = {
+    decrement(1)
+  }
+}
+
+object DemoCounter extends App {
+  var counter = new Counter(0)
+  println(s"Current count: ${counter.count}")
+  counter = counter.increment(5)
+  println(s"Increment by 5: ${counter.count}")
+  counter = counter.decrement()
+  println(s"Decrement one: ${counter.count}")
+}
