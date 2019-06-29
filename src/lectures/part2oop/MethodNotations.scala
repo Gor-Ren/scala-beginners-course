@@ -23,6 +23,8 @@ object MethodNotations extends App {
 
   /*
     Infix Notation
+
+    (Only allowed for single-operator methods)
   */
   val mary = new Person("Mary", "Inception")
   println(s"Mary likes Inception?: ${mary.likes("Inception")}")
@@ -40,6 +42,8 @@ object MethodNotations extends App {
 
   /*
     Prefix Notation
+
+    (Only allowed for - + ~ !)
   */
   val x = -1  // the "negative" sign is a unary operator
   val y = 1.unary_-  // equivalent
@@ -48,6 +52,8 @@ object MethodNotations extends App {
 
   /*
     Postfix Notation
+
+    (Only allowed for parameterless methods)
    */
   println(mary.isAlive)
   // we can use postfix notation on paramaterless method
