@@ -23,24 +23,24 @@ abstract class MyList {
   override def toString: String = s"[$elementsToString]"
 }
 
-object Empty extends MyList {  // we make it an object since it can be a singleton
+case object Empty extends MyList {  // we make it an object since it can be a singleton
   override def head: Int = throw new NoSuchElementException("List is empty")
 
   override def tail: MyList = throw new NoSuchElementException("List is empty")
 
   override def isEmpty = true
 
-  override def add(element: Int) = new Cons(element)
+  override def add(element: Int) = Cons(element)
 
   override def elementsToString: String = ""
 }
 
-class Cons(override val head: Int, override val tail: MyList = Empty) extends MyList {
+case class Cons(override val head: Int, override val tail: MyList = Empty) extends MyList {
   // something cool happened: overrode "value methods" head and tail with vals in signature
 
   override def isEmpty = false
 
-  override def add(element: Int) = new Cons(element, this)
+  override def add(element: Int) = Cons(element, this)
 
   override def elementsToString: String = {
     if (tail.isEmpty) head.toString
@@ -49,10 +49,10 @@ class Cons(override val head: Int, override val tail: MyList = Empty) extends My
 }
 
 object MyListTest extends App {
-  val singletonList = new Cons(1)
+  val singletonList = Cons(1)
   println(singletonList.head)
 
-  val list = new Cons(2, singletonList)
+  val list = Cons(2, singletonList)
   println(list.head)
   println(list.add(3).head)
   println(list.tail)
