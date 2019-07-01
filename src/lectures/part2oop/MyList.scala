@@ -23,19 +23,19 @@ abstract class MyList[+E] {
   override def toString: String = s"[$elementsToString]"
 }
 
-case class Empty[+E] extends MyList[E] {  // we make it an object since it can be a singleton
-  override def head: E = throw new NoSuchElementException("List is empty")
+case object Empty extends MyList[Nothing] {  // we make it an object since it can be a singleton
+  override def head: Nothing = throw new NoSuchElementException("List is empty")
 
-  override def tail: MyList[E] = throw new NoSuchElementException("List is empty")
+  override def tail: Nothing = throw new NoSuchElementException("List is empty")
 
   override def isEmpty = true
 
-  override def add[F >: E](element: F) = Cons[F](element)
+  override def add[F](element: F) = Cons[F](element)
 
   override def elementsToString: String = ""
 }
 
-case class Cons[+E](override val head: E, override val tail: MyList[E] = new Empty[E]) extends MyList[E] {
+case class Cons[+E](override val head: E, override val tail: MyList[E] = Empty[E]) extends MyList[E] {
   // something cool happened: overrode "value methods" head and tail with vals in signature
 
   override def isEmpty = false
