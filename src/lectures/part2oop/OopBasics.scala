@@ -35,4 +35,3 @@ class Person(name: String, val age: Int) {
   // limitation: an auxiliary constructor's implementation must be to call another constructor
   // in this case we could more easily have used a default param
 }
-
