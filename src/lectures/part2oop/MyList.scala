@@ -30,7 +30,7 @@ case object Empty extends MyList[Nothing] {  // we make it an object since it ca
 
   override def isEmpty = true
 
-  override def add[F](element: F) = Cons[F](element)
+  override def add[F >: Nothing](element: F): MyList[F] = Cons(element)
 
   override def elementsToString: String = ""
 }
@@ -59,13 +59,13 @@ object MyListTest extends App {
 
   println(list.add(3).add(4).add(0))
 
-  val strings = Cons[String]("hello", new Cons[String]("there"))
+  val strings = Cons[String]("hello", Cons[String]("there"))
   println(strings)
 
-  val covariantStrings: MyList[String] = new Cons[String]("test")
+  val covariantStrings: MyList[String] = Cons[String]("test")
   val mixed = covariantStrings.add(2)  // type has become MyList[Any] due to covariance
   println(mixed)
 
-  val variousStuff = Cons[Any]("hello", new Cons[Any](5))
+  val variousStuff = Cons[Any]("hello", Cons(5))
   println(variousStuff.add(2.5F))
 }
