@@ -60,4 +60,17 @@ object Generics extends App {
 
   val catList: MyOtherList[Animal] = new MyOtherList[Cat]
   val mixedList: MyOtherList[Animal] = catList.add(new Dog)  // dynamic type has become MyOtherList[Animal]
+
+  /*
+   * Exercises
+   */
+
+  // generic trait MyPredicate[T]
+  // generic trait MyTransformer[A, B]
+  // MyList:
+  //   - map(transformer) => MyList[B]
+  //   - filter(predicate) => MyList[T]
+  //   - flatMap(transformer[A, MyList[B]] => MyList[B]
+
+  // see MyList.scala
 }
