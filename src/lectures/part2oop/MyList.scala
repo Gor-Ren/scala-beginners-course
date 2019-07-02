@@ -20,7 +20,7 @@ abstract class MyList[+E] {
   def tail: MyList[E]
   def isEmpty: Boolean
   def add[F >: E](element: F): MyList[F]
-  def addAll[F >: E](list: MyList[F]): MyList[F]
+  def ++[F >: E](list: MyList[F]): MyList[F]  // concatenation
 
   def filter(predicate: MyPredicate[E]): MyList[E]
   def map[F](transformer: MyTransformer[E, F]): MyList[F]
@@ -39,7 +39,7 @@ case object Empty extends MyList[Nothing] {  // we make it an object since it ca
 
   override def add[F >: Nothing](element: F): MyList[F] = Cons(element)
 
-  override def addAll[F >: Nothing](list: MyList[F]): MyList[F] = list
+  override def ++[F >: Nothing](list: MyList[F]): MyList[F] = list
 
   override def filter(predicate: MyPredicate[Nothing]): MyList[Nothing] = Empty
 
@@ -57,7 +57,7 @@ case class Cons[+E](override val head: E, override val tail: MyList[E] = Empty) 
 
   override def add[F >: E](element: F) = Cons(element, this)
 
-  override def addAll[F >: E](list: MyList[F]): MyList[F] = Cons(head, tail.addAll(list))
+  override def ++[F >: E](list: MyList[F]): MyList[F] = Cons(head, tail ++ list)
 
   override def filter(predicate: MyPredicate[E]): MyList[E] = {
     if (predicate.test(head)) Cons(head, tail.filter(predicate))
@@ -69,7 +69,7 @@ case class Cons[+E](override val head: E, override val tail: MyList[E] = Empty) 
   }
 
   override def flatMap[F](transformer: MyTransformer[E, MyList[F]]): MyList[F] = {
-    transformer.transform(head).addAll(tail.flatMap(transformer))
+    transformer.transform(head) ++ tail.flatMap(transformer)
   }
 
   override def elementsToString: String = {
@@ -107,5 +107,9 @@ object MyListTest extends App {
   val variousStuff = Cons[Any]("hello", Cons(5))
   println(variousStuff.add(2.5F))
 
-  println(variousStuff.addAll(strings))
+  println(variousStuff ++ strings)
+
+  println(strings.map((s: String) => s + s))
+
+  println(list.map((i: Int) => i * 2))
 }
