@@ -62,24 +62,36 @@ object Exceptions extends App {
    *   - UnderflowException if subtract(x,y) exceeds Int.MIN_VALUE
    *   - MathCalculationException for division by zero
    */
-  class OverflowException extends Exception
-  class UnderflowException extends Exception
-  class MathCalculationException extends Exception
+  class OverflowException extends RuntimeException
+  class UnderflowException extends RuntimeException
+  class MathCalculationException extends RuntimeException("Division by zero")
 
-//  class PocketCalculator {
-//    def add(x: Long, y: Long): Int = {
-//      val result = x + y
-//      if (result > Int.MaxValue) throw new OverflowException
-//      else if (result < Int.MinValue) throw new UnderflowException
-//      else result.toInt
-//    }
-//
-//    def subtract(x: Long, y: Long): Int = {
-//      add(x, -y)
-//    }
-//
-//    def multiply(x: Long, y: Long): Int = {
-//
-//    }
-//  }
+  object PocketCalculator {
+    def add(x: Int, y: Int): Int = {
+      toIntOrThrow(x.toLong + y.toLong)
+    }
+
+    def subtract(x: Int, y: Int): Int = {
+      add(x, -y)
+    }
+
+    def multiply(x: Int, y: Int): Int = {
+      toIntOrThrow(x.toLong * y.toLong)
+    }
+
+    def divide(n: Int, divisor: Int): Int = {
+      if (divisor == 0) throw new MathCalculationException
+      else toIntOrThrow(n.toLong / divisor.toLong)
+    }
+
+    private def toIntOrThrow(input: Long) = {
+      if (input > Int.MaxValue) throw new OverflowException
+      else if (input < Int.MinValue) throw new UnderflowException
+      else input.toInt
+    }
+  }
+
+  println(PocketCalculator.add(50, 900))
+  // throws UnderflowException
+//  println(PocketCalculator.subtract(Int.MinValue, Int.MinValue))
 }
