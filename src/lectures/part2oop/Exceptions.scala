@@ -66,20 +66,20 @@ object Exceptions extends App {
   class UnderflowException extends Exception
   class MathCalculationException extends Exception
 
-  class PocketCalculator {
-    def add(x: Long, y: Long): Int = {
-      val result = x + y
-      if (result > Int.MaxValue) throw new OverflowException
-      else if (result < Int.MinValue) throw new UnderflowException
-      else result.toInt
-    }
-
-    def subtract(x: Long, y: Long): Int = {
-      add(x, -y)
-    }
-
-    def multiply(x: Long, y: Long): Int = {
-      
-    }
-  }
+//  class PocketCalculator {
+//    def add(x: Long, y: Long): Int = {
+//      val result = x + y
+//      if (result > Int.MaxValue) throw new OverflowException
+//      else if (result < Int.MinValue) throw new UnderflowException
+//      else result.toInt
+//    }
+//
+//    def subtract(x: Long, y: Long): Int = {
+//      add(x, -y)
+//    }
+//
+//    def multiply(x: Long, y: Long): Int = {
+//
+//    }
+//  }
 }

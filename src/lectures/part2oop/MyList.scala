@@ -112,4 +112,8 @@ object MyListTest extends App {
   println(strings.map((s: String) => s + s))
 
   println(list.map((i: Int) => i * 2))
+
+  println(list.flatMap(new MyTransformer[Int, MyList[Int]] {
+    override def transform(i: Int): MyList[Int] = Cons(i, Cons(i + 1))
+  }))
 }
